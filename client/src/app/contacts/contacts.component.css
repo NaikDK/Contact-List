@@ -1,0 +1,12 @@
+.width{
+    width: 100px;
+    padding: 10px;
+    margin: 10px;
+}
+.margin{
+    margin: 5px;
+    /* padding: 10px; */
+}
+.round{
+    border-radius: 10%;
+}
