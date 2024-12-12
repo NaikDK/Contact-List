@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {ContactService} from '../contact.service';
-import {Contact} from '../Contact';
-
+import {Contact} from '../contact';
+import { AuthServiceService } from '../auth-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contacts',
@@ -21,7 +22,7 @@ export class ContactsComponent implements OnInit {
   @ViewChild('lname') lname:ElementRef;
   @ViewChild('phoneno') phoneno:ElementRef;
 
-  constructor(private contactService: ContactService) { }
+  constructor(private contactService: ContactService, private authService: AuthServiceService, private router: Router) { }
 
   addContact(){
     const newContact = {
@@ -59,6 +60,10 @@ export class ContactsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.authService.isAuthenticated());
+    if(!this.authService.isAuthenticated()){
+      this.router.navigate(['login']);      
+    }
     this.contactService.getContacts()
     .subscribe( 
         contacts => this.contacts = contacts

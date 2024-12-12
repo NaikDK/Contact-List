@@ -9,6 +9,7 @@ var path = require('path');
 var app = express();
 
 const route = require('./routes/route');
+const auth = require('./routes/authRoutes');
 
 //connect to mondoDB
 mongoose.connect('mongodb://127.0.0.1:27017/contactlist', {useNewUrlParser:true, useUnifiedTopology:true});
@@ -40,12 +41,13 @@ app.use(express.json());
 //static files
 app.use(express.static(path.join(__dirname,  'public')));
 
+app.use('/auth/', auth);
 app.use('/',route);
 
 //testing server
-app.get('/',(req,res)=>{
-    res.send("Hello World");
-})
+// app.get('/',(req,res)=>{
+//     res.send("Hello World");
+// })
 
 app.listen(port,()=>{
     console.log("Server started at port: "+port);

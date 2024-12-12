@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+const authHandler = require('../middleware/authHandler');
 const Contact = require('../models/contacts');
 const contacts = require('../models/contacts');
 
+// app.use("/auth/", require("./authRoutes"));
+
 //Retrieving Data
-router.get('/contacts', (req, res,next)=>{
+router.get('/contacts', authHandler, (req, res,next)=>{
     Contact.find(function(err, contacts){
         res.json(contacts);
     });
@@ -13,7 +16,7 @@ router.get('/contacts', (req, res,next)=>{
 });
 
 //Retrieving single record
-router.get('/contacts/:id', (req, res,next)=>{
+router.get('/contacts/:id', authHandler, (req, res,next)=>{
     // console.log(req);
     Contact.findByIdAndRemove({_id: req.params.id}, function(err, contact){
         // console.log(contact)
@@ -22,7 +25,7 @@ router.get('/contacts/:id', (req, res,next)=>{
 });
 
 //Add contact
-router.post('/contacts',(req, res, next)=>{
+router.post('/contacts', authHandler,(req, res, next)=>{
     let newContact = new Contact({
         firstName: req.body.firstName,
         lastName: req.body.lastName,

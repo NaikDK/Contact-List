@@ -14,7 +14,13 @@ export class ContactService {
 
   //retrieving contacts
   getContacts(){
-    return this.http.get('http://localhost:3000/contacts')
+    const token = localStorage.getItem("token");
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
+      
+    return this.http.get('http://localhost:3000/contacts', { headers })
       .pipe(map(res => res));
   }
 
