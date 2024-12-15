@@ -6,10 +6,11 @@ import { AuthServiceService } from '../auth-service.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-contacts',
-  templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.css'],
-  providers: [ContactService]
+    selector: 'app-contacts',
+    templateUrl: './contacts.component.html',
+    styleUrls: ['./contacts.component.css'],
+    providers: [ContactService],
+    standalone: false
 })
 export class ContactsComponent implements OnInit {
   contacts: any;
