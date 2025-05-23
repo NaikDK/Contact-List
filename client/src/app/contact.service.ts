@@ -15,13 +15,13 @@ export class ContactService {
   //retrieving contacts
   getContacts(){
     const token = localStorage.getItem("token");
-
-    const headers = new HttpHeaders()
+    const httpOptions = {
+    headers : new HttpHeaders()
       .set('Authorization', `Bearer ${token}`)
-      .set('Content-Type', 'application/json');
+      .set('Content-Type', 'application/json')
+    };
       
-    return this.http.get('http://localhost:3000/contacts', { headers })
-      .pipe(map(res => res));
+    return this.http.get('http://localhost:3000/contacts', httpOptions);
   }
 
   // retrieve single contact for update
@@ -39,13 +39,15 @@ export class ContactService {
   addContact(newContact){
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
       })
     };
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/contacts', newContact, httpOptions)
-      .pipe(map(res => res));
+    // var headers = new Headers();
+    // headers.append('Content-Type', 'application/json');
+
+    return this.http.post('http://localhost:3000/contacts', newContact, httpOptions);
+    // .pipe(map(res => res));
   }
 
   //Delete Method

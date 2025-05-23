@@ -32,8 +32,9 @@ export class ContactsComponent implements OnInit {
       phone: this.phone
     }
     // console.log(newContact);
-    this.contactService.addContact(newContact).subscribe(contact => {
-      this.contacts.push(contact);
+    this.contactService.addContact(newContact).subscribe(res => {
+      // console.log(res)
+      // this.contacts.push(res['contact']);
       this.ngOnInit();
       this.resetForm();
     });
@@ -61,12 +62,13 @@ export class ContactsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.authService.isAuthenticated());
+    // console.log(this.authService.isAuthenticated());
     if(!this.authService.isAuthenticated()){
       this.router.navigate(['login']);      
     }
+    console.log("getting contacts");
     this.contactService.getContacts()
-    .subscribe( 
+    .subscribe(
         contacts => this.contacts = contacts
       );
       // console.log(this.contact);

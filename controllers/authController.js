@@ -7,6 +7,7 @@ const jwtKey = "FarsanMartBaka";
 
 const registerUser = asyncHandler(async (req, res) => {
     try{
+        console.log("Was here");
         const exist = await User.findOne({email: req.body.email});
         if(!exist){
             const user = await User.create(req.body);
@@ -21,8 +22,9 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
+    console.log("Login Here");
     try{
-        // console.log("Here");
+        console.log("Here");
         const {email, password} = req.body;
         const user = await User.findOne({email: email});
         if(user){

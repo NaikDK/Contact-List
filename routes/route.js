@@ -8,10 +8,9 @@ const contacts = require('../models/contacts');
 // app.use("/auth/", require("./authRoutes"));
 
 //Retrieving Data
-router.get('/contacts', authHandler, (req, res,next)=>{
-    Contact.find(function(err, contacts){
-        res.json(contacts);
-    });
+router.get('/contacts', authHandler, async (req, res,next)=>{
+    let results = await Contact.find()
+        res.status(200).json(results);
     // res.send("Get contacts");
 });
 
@@ -32,14 +31,26 @@ router.post('/contacts', authHandler,(req, res, next)=>{
         phone: req.body.phone
     });
 
-    newContact.save((err, contact)=>{
-        if(err){
-            res.json({msg: 'failed to add contact'});
-        }
-        else{
-            res.json({msg: 'Contact added successfully'});
-        }
+    newContact.save().then((result)=>{
+        res.status(200).json({
+            message: "Contact added successfully",
+            contact: result
+        });
+    }
+    ).catch((err)=>{
+        res.status(500).json({
+            message: "Failed to add contact",
+            error: err
+        });
     });
+    // newContact.save((err, contact)=>{
+    //     if(err){
+    //         res.json({msg: 'failed to add contact'});
+    //     }
+    //     else{
+    //         res.json({msg: 'Contact added successfully'});
+    //     }
+    // });
 });
 
 //Deleting contacts
